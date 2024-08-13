@@ -65,7 +65,9 @@
         </div>
         
         <!-- Products Section -->
+        <h1>Products</h1>
         <div class="row">
+           
             @foreach ($products as $product)
                 <div class="col-lg-4 mb-4">
                     <div class="card shadow-sm border-light">

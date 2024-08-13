@@ -11,26 +11,37 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $query = Product::query();
-    
-        // Search functionality by name
+
+        // Search functionality
         if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $query->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('description', 'like', '%' . $request->search . '%');
         }
-    
-        // Filtering by price range
-        if ($request->has('min_price') && $request->has('max_price')) {
-            $query->whereBetween('price', [$request->min_price, $request->max_price]);
+
+        // Filtering by category
+        if ($request->has('category')) {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('name', $request->category);
+            });
         }
-    
+
+        // Filtering by tag
+        if ($request->has('tag')) {
+            $query->whereHas('tags', function ($q) use ($request) {
+                $q->where('name', $request->tag);
+            });
+        }
+
         // Paginate the results
         $products = $query->paginate(10);
-    
-        // Pass categories for filtering if needed
+
+        // Pass categories and tags for filtering
         $categories = Category::all();
-    
-        return view('products.index', compact('products', 'categories'));
+        $tags = Tag::all();
+
+        return view('products.index', compact('products', 'categories', 'tags'));
     }
-    
+
     public function create()
     {
         // Pass categories and tags to the create view

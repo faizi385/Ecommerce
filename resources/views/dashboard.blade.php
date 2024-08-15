@@ -18,9 +18,12 @@
                     <li>
                         <a href="{{ route('orders.index') }}" class="text-white">Manage Orders</a>
                     </li>
-                    {{-- <li>
+                    <li>
                         <a href="{{ route('users.index') }}" class="text-white">Manage Users</a>
-                    </li> --}}
+                    </li>
+                    <li>
+                        <a href="{{ route('welcome') }}" class="text-white">View Store</a>
+                    </li>
                     <li>
                         <a href="{{ route('logout') }}" class="text-white" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -81,9 +84,10 @@
                 </div>
 
                 <div class="mt-4">
-                    <a href="{{ route('products.index') }}" class="btn btn-primary">Manage Products</a>
-                    <a href="{{ route('orders.index') }}" class="btn btn-secondary">Manage Orders</a>
-                    <a href="{{ route('products.create') }}" class="btn btn-success">Create Product</a>
+                    <a style="background-color: #021526" href="{{ route('products.index') }}" class="btn text-white">Manage Products</a>
+                    <a style="background-color: #03346E" href="{{ route('orders.index') }}" class="btn text-white">Manage Orders</a>
+                    <a style="background-color: #240A34" href="{{ route('products.create') }}" class="btn text-white">Create Product</a>
+                    <a style="background-color: #1B2A49" href="{{ route('users.index') }}" class="btn text-white">Manage Users</a>
                 </div>
             </div>
         </div>

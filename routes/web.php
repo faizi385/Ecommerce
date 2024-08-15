@@ -2,11 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\TestEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +52,26 @@ Route::get('/search', [ProductController::class, 'index'])->name('search');
     // Ensure you have create method in OrderController
     Route::post('order/create', [OrderController::class, 'createOrder'])->name('order.create');
     Route::get('order/{id}', [OrderController::class, 'show'])->name('order.show');
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+// routes/web.php
+// routes/web.php
+Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+
+Route::get('/test-email', [TestEmailController::class, 'sendTestEmail']);
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
+
+Route::get('/privacy-policy', function () {
+    return view('privacy-policy');
+})->name('privacy.policy');
+
 
     // In web.php
 Route::middleware('role:Admin')->group(function () {
@@ -59,6 +81,7 @@ Route::middleware('role:Admin')->group(function () {
 });
 Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
 });
 });
 

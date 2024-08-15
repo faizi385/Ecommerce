@@ -11,36 +11,42 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $query = Product::query();
-
-        // Search functionality
+    
+        // Search functionality by product name and description
         if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('description', 'like', '%' . $request->search . '%');
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('description', 'like', '%' . $searchTerm . '%');
+            });
         }
-
+    
         // Filtering by category
         if ($request->has('category')) {
-            $query->whereHas('category', function ($q) use ($request) {
-                $q->where('name', $request->category);
+            $categoryName = $request->category;
+            $query->whereHas('category', function ($q) use ($categoryName) {
+                $q->where('name', $categoryName);
             });
         }
-
+    
         // Filtering by tag
         if ($request->has('tag')) {
-            $query->whereHas('tags', function ($q) use ($request) {
-                $q->where('name', $request->tag);
+            $tagName = $request->tag;
+            $query->whereHas('tags', function ($q) use ($tagName) {
+                $q->where('name', $tagName);
             });
         }
-
+    
         // Paginate the results
-        $products = $query->paginate(10);
-
+        $products = $query->paginate(6);
+    
         // Pass categories and tags for filtering
         $categories = Category::all();
         $tags = Tag::all();
-
+    
         return view('products.index', compact('products', 'categories', 'tags'));
     }
+    
 
     public function create()
     {
@@ -113,7 +119,11 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Product updated successfully!');
     }
-
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('products.show', compact('product'));
+    }
     public function destroy(Product $product)
     {
         // Detach tags before deleting the product

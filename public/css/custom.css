@@ -1,0 +1,567 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.navbar-nav {
+    flex-direction: row;
+    margin: auto;
+}
+
+.navbar-nav.center {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.navbar-nav.right {
+    margin-left: auto;
+}
+
+.navbar-nav .nav-link {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler-icon {
+    background-image: none;
+}
+
+.navbar-collapse {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #000;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #007bff;
+}
+
+.navbar-light .navbar-brand {
+    color: #000;
+}
+
+.navbar-light .navbar-brand:hover {
+    color: #007bff;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #f8f9fa;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    overflow-y: auto;
+    z-index: 1000;
+    display: none; /* Initially hidden */
+    transition: transform 0.3s ease; /* Smooth transition */
+    transform: translateX(100%); /* Initially off-screen */
+}
+
+.sidebar.active {
+    display: block;
+    transform: translateX(0); /* Slide in when active */
+}
+
+#cart-toggle {
+    cursor: pointer;
+}
+
+/* Custom CSS for Admin Panel */
+.container {
+padding: 20px;
+}
+
+.btn {
+font-size: 16px;
+font-weight: bold;
+}
+
+.btn i {
+margin-right: 8px;
+}
+
+.card {
+border: 1px solid #ddd;
+border-radius: 0.25rem;
+}
+
+.card-header {
+background-color: #f8f9fa;
+border-bottom: 1px solid #ddd;
+}
+
+.card-title {
+margin-bottom: 0;
+}
+
+.card-body {
+padding: 1.25rem;
+background-color: #fff;
+}
+
+.mt-4 {
+margin-top: 1.5rem !important;
+}
+
+.mb-4 {
+margin-bottom: 1.5rem !important;
+}
+
+.me-2 {
+margin-right: 0.5rem !important;
+}
+
+h3 {
+font-weight: 500;
+}
+
+.bi {
+font-size: 1.2rem;
+}
+/* admin.css */
+
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#admin-panel {
+min-height: 100vh;
+}
+
+#sidebar {
+width: 250px;
+position: fixed;
+top: 0;
+left: 0;
+bottom: 0;
+background-color: #343a40;
+}
+
+.sidebar-header {
+padding: 20px;
+background: #212529;
+}
+
+.sidebar-header h3 {
+margin: 0;
+}
+
+#sidebar ul.components {
+padding: 20px 0;
+list-style: none;
+}
+
+#sidebar ul.components li {
+padding: 10px;
+}
+
+#sidebar ul.components li a {
+color: #fff;
+text-decoration: none;
+}
+
+#sidebar ul.components li a:hover {
+background: #495057;
+color: #fff;
+}
+
+#content {
+margin-left: 250px;
+padding: 20px;
+}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+line-height: 1.5;
+font-family: 'Poppins', sans-serif;
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+.container {
+max-width: 1170px;
+margin: auto;
+}
+
+.row {
+display: flex;
+flex-wrap: wrap;
+}
+
+ul {
+list-style: none;
+}
+
+.footer {
+background-color: #24262b;
+padding: 70px 0;
+}
+
+.footer-col {
+width: 25%;
+padding: 0 15px;
+}
+
+.footer-col h4 {
+font-size: 18px;
+color: #ffffff;
+text-transform: capitalize;
+margin-bottom: 35px;
+font-weight: 500;
+position: relative;
+}
+
+.footer-col h4::before {
+content: '';
+position: absolute;
+left: 0;
+bottom: -10px;
+background-color: #e91e63;
+height: 2px;
+box-sizing: border-box;
+width: 50px;
+}
+
+.footer-col ul li:not(:last-child) {
+margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+font-size: 16px;
+text-transform: capitalize;
+color: #ffffff;
+text-decoration: none;
+font-weight: 300;
+color: #bbbbbb;
+display: block;
+transition: all 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+color: #ffffff;
+padding-left: 8px;
+}
+
+.footer-col .social-links a {
+display: inline-block;
+height: 40px;
+width: 40px;
+background-color: rgba(255, 255, 255, 0.2);
+margin: 0 10px 10px 0;
+text-align: center;
+line-height: 40px;
+border-radius: 50%;
+color: #ffffff;
+transition: all 0.5s ease;
+}
+
+.footer-col .social-links a:hover {
+color: #24262b;
+background-color: #ffffff;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+.footer-col {
+width: 50%;
+margin-bottom: 30px;
+}
+}
+
+@media (max-width: 574px) {
+.footer-col {
+width: 100%;
+}
+}
+
+.card {
+height: 100%; /* Ensures card takes full height of the column */
+display: flex;
+flex-direction: column;
+}
+
+.card-img-top {
+object-fit: cover; /* Ensures the image covers the container while maintaining aspect ratio */
+width: 100%; /* Ensures the image takes the full width of the card */
+height: 300px; /* Adjust this height based on your card design */
+}
+
+.card-body {
+flex: 1;
+display: flex;
+flex-direction: column;
+justify-content: space-between; /* Ensures content is spaced out evenly */
+}
+
+.card-title {
+font-size: 1.25rem; /* Adjust title size */
+margin-bottom: 0.5rem;
+}
+
+.card-text {
+flex: 1; /* Allows text to grow and fill available space */
+}
+
+.card-footer {
+text-align: center; /* Center footer content */
+padding: 1rem;
+}
+
+.card .btn {
+margin-top: 0.5rem; /* Space between buttons */
+}
+.add-to-cart {
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 16px;
+padding: 10px 20px;
+border: none;
+background-color: #021526; /* Primary color */
+color: #fff;
+transition: background-color 0.3s, transform 0.3s;
+}
+
+.add-to-cart:hover {
+background-color: #0056b3; /* Darker shade for hover effect */
+transform: scale(1.05);
+}
+
+.add-to-cart .fa-arrow-right {
+font-size: 20px;
+}
+
+.btn-custom {
+background-color: #021526; /* Replace with your desired color */
+border-color: #021526; /* Replace with your desired color */
+color: #fff;
+}
+
+.btn-custom:hover {
+background-color: #0056b3; /* Darker shade for hover */
+border-color: #004085; /* Darker shade for border on hover */
+}
+
+.btn-custom.add-to-cart {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.table th, .table td {
+text-align: center;
+}
+
+.table td {
+vertical-align: middle;
+}
+
+.alert-info {
+font-size: 1.1rem;
+}
+
+.badge {
+font-size: 0.9rem;
+}
+.sidebar {
+position: fixed;
+top: 0;
+right: 0;
+width: 300px;
+height: 100%;
+background-color: #fff;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+overflow-y: auto;
+transition: transform 0.3s ease-in-out;
+transform: translateX(100%); /* Initially hidden off-screen */
+}
+
+.sidebar.show {
+transform: translateX(0); /* Show sidebar */
+}
+
+.btn-close {
+background: none;
+border: none;
+font-size: 1.5rem;
+cursor: pointer;
+}
+
+.btn-close:focus {
+outline: none;
+}
+
+.card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-img-top {
+    transition: opacity 0.3s ease;
+}
+
+.card-img-top:hover {
+    opacity: 0.8;
+}
+
+/* Add to resources/css/app.css or a dedicated CSS file */
+.card {
+    border-radius: 8px;
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 3px solid #ddd;
+    margin-bottom: 1rem;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+
+blockquote {
+    border-left: 4px solid #007bff;
+    padding-left: 20px;
+    margin-left: 0;
+    margin-right: 0;
+}
+blockquote footer {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+/* Testimonials Section Styles */
+.testimonial-card {
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f9f9f9;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.testimonial-header {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.testimonial-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #007bff;
+    position: absolute;
+ 
+    left: calc(50% - 40px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-body {
+    padding: 60px 20px 20px; /* Adjust padding to make room for the image */
+}
+
+.testimonial-text {
+    font-size: 1.1rem;
+    color: #333;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.testimonial-footer {
+    margin-top: 20px;
+}
+
+.customer-name {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.customer-role {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+/* Optional: Add a background color to the testimonials section */
+/* .container {
+    background: #f1f1f1;
+    padding: 40px 0;
+} */
+
+/* Our Services Section Styles */
+.service-card {
+    border-radius: 12px;
+    background: #fff;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.service-icon {
+    color: #007bff; /* You can change this color to match your theme */
+}
+
+.service-title {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.service-description {
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+.search-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 300px; /* Adjust the max-width as needed */
+}

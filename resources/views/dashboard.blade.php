@@ -24,7 +24,7 @@
                     <li>
                         <a href="{{ route('welcome') }}" class="text-white">View Store</a>
                     </li>
-                    <li>
+                    <li style="margin-top: 280px" class="">
                         <a href="{{ route('logout') }}" class="text-white" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf

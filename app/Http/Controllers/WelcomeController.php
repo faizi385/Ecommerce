@@ -11,7 +11,7 @@ class WelcomeController extends Controller
     {
         
         $categories = Category::all();
-        $products = Product::latest()->take(8)->get(); // Get the latest 8 products or adjust as needed
+        $products = Product::latest()->take(6)->get(); // Get the latest 8 products or adjust as needed
 
         return view('welcome', compact('categories', 'products'));
     }

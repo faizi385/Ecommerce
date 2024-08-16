@@ -24,7 +24,7 @@
                             <th>Total</th>
                             {{-- <th>Products</th> --}}
                             @if (auth()->user()->hasRole('Admin'))
-                                <th>Action</th>
+                                <th>Actions</th>
                             @endif
                         </tr>
                     </thead>
@@ -51,8 +51,9 @@
                                 </td> --}}
                                 @if (auth()->user()->hasRole('Admin'))
                                     <td>
+                                        <a href="{{ route('orders.show', $order->id) }}" class="btn btn-info btn-sm">View Details</a>
                                         @if ($order->status === 'pending')
-                                            <form action="{{ route('orders.update', $order) }}" method="POST" class="form-inline">
+                                            <form action="{{ route('orders.update', $order->id) }}" method="POST" class="form-inline d-inline">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="form-group">
@@ -63,8 +64,6 @@
                                                     </select>
                                                 </div>
                                             </form>
-                                        @else
-                                           
                                         @endif
                                     </td>
                                 @endif

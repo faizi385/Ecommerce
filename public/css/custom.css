@@ -306,6 +306,12 @@ display: flex;
 flex-direction: column;
 }
 
+.card-l {
+    height: 40%; /* Ensures card takes full height of the column */
+    display: flex;
+    flex-direction: column;
+    }
+
 .card-img-top {
 object-fit: cover; /* Ensures the image covers the container while maintaining aspect ratio */
 width: 100%; /* Ensures the image takes the full width of the card */
@@ -515,7 +521,7 @@ blockquote footer {
 
 .customer-name {
     font-weight: bold;
-    color: #007bff;
+    color: #24262b;
 }
 
 .customer-role {
@@ -564,4 +570,36 @@ blockquote footer {
 .search-input {
     width: 100%;
     max-width: 300px; /* Adjust the max-width as needed */
+}
+
+/* Add these styles to your CSS file or within a <style> tag in your Blade template */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animated-heading {
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animated-heading-slide {
+    animation: slideInLeft 1s ease-out;
 }

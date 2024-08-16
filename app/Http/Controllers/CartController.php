@@ -13,19 +13,24 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
         return view('cart.index', compact('cart'));
     }
-
     public function add(Request $request, $productId)
     {
         $product = Product::find($productId);
-
-        // Validate the size
-        $size = $request->input('size');
+    
+        if (!$product) {
+            return redirect()->back()->with('error', 'Product not found.');
+        }
+    
+        // Validate the size if needed
+        $size = $request->input('size', 'M'); // Default size if not provided
+    
+        // Check if size is valid if size is required
         if (!in_array($size, ['S', 'M', 'L', 'XL'])) {
             return redirect()->back()->withErrors('Invalid size selected.');
         }
-
+    
         $cart = session()->get('cart', []);
-
+    
         if (isset($cart[$productId])) {
             // Increase quantity if product already in cart
             $cart[$productId]['quantity'] += 1;
@@ -39,12 +44,12 @@ class CartController extends Controller
                 'size' => $size, // Add size here
             ];
         }
-
+    
         session()->put('cart', $cart);
-
+    
         return redirect()->back()->with('success', 'Product added to cart!');
     }
-
+    
 
     public function getCartContents()
     {
@@ -75,29 +80,17 @@ class CartController extends Controller
     public function update(Request $request, $id)
     {
         $cart = session()->get('cart', []);
-    
+        
         if (isset($cart[$id])) {
-            $quantity = $request->input('quantity');
-            $cart[$id]['quantity'] = $quantity;
-            $cart[$id]['size'] = $request->input('size', $cart[$id]['size']); // Preserve old size if not updated
-            
+            $cart[$id]['quantity'] = $request->input('quantity');
+            $cart[$id]['size'] = $request->input('size'); // Update size
             session()->put('cart', $cart);
-    
-            // Return the updated cart item and total price
-            return response()->json([
-                'success' => true,
-                'cart' => $cart[$id],
-                'total' => array_sum(array_map(function($item) {
-                    return $item['price'] * $item['quantity'];
-                }, $cart))
-            ]);
+        
+            return response()->json(['success' => true, 'message' => 'Quantity updated!']);
         }
-    
+        
         return response()->json(['success' => false, 'message' => 'Item not found in cart.']);
     }
-    
-    
-    
 
     public function remove($id)
     {
@@ -110,55 +103,39 @@ class CartController extends Controller
     
         return redirect()->route('cart.index')->with('success', 'Product removed from cart!');
     }
+
     public function checkout(Request $request)
     {
         $cart = session()->get('cart', []);
-    
-        // Check if the cart is empty
+        
         if (empty($cart)) {
             return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
-    
-        // Validate the request
-        $request->validate([
-            'address' => 'required|string|max:255',
-            'city' => 'required|string|max:100',
-            'country' => 'required|string|max:100',
-            'payment' => 'required|in:cash_on_delivery',
-            'notes' => 'nullable|string|max:1000',
-        ]);
-    
+
         // Calculate total price
         $total = array_sum(array_map(function($item) {
             return $item['price'] * $item['quantity'];
         }, $cart));
     
-        // Create a new order with the total price and address details
+        // Create a new order with the total price
         $order = Order::create([
             'user_id' => auth()->id(),
             'status' => 'pending',
-            'total' => $total,
-            'address' => $request->input('address'),
-            'city' => $request->input('city'),
-            'country' => $request->input('country'),
-            'payment_method' => $request->input('payment'),
-            'notes' => $request->input('notes'),
+            'total' => $total, // Include the total field
         ]);
     
-        // Add order items
-        foreach ($cart as $item) {
-            $order->items()->create([
-                'product_id' => $item['product_id'],
-                'quantity' => $item['quantity'],
-                'price' => $item['price'],
-            ]);
-        }
+        // Add order items (if you have an order_items table or similar)
+        // foreach ($cart as $item) {
+        //     $order->items()->create([
+        //         'product_id' => $item['product_id'],
+        //         'quantity' => $item['quantity'],
+        //         'price' => $item['price'], // Adjust based on your structure
+        //     ]);
+        // }
     
         // Clear the cart
         $request->session()->forget('cart');
     
-        // Pass cart data to the view
-        return view('cart.checkout', compact('cart'))->with('success', 'Order placed successfully!');
+        return redirect()->route('orders.index')->with('success', 'Order placed successfully!');
     }
-    
 }

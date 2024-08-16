@@ -43,6 +43,17 @@ Route::post('cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
 Route::post('cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
+Route::resource('orders', OrderController::class);
+Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+
+
+Route::resource('users', UserController::class);
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+
+// Route to handle the profile update form submission
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+
 Route::post('checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
 Route::get('/search', [ProductController::class, 'index'])->name('search');
@@ -53,6 +64,7 @@ Route::get('/search', [ProductController::class, 'index'])->name('search');
     Route::post('order/create', [OrderController::class, 'createOrder'])->name('order.create');
     Route::get('order/{id}', [OrderController::class, 'show'])->name('order.show');
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
 // routes/web.php
 // routes/web.php
 Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');

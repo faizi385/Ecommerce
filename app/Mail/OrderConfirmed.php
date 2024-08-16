@@ -1,10 +1,7 @@
 <?php
-// app/Mail/OrderConfirmed.php
-
-// app/Mail/OrderConfirmed.php
-
 namespace App\Mail;
 
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -15,28 +12,17 @@ class OrderConfirmed extends Mailable
 
     public $order;
 
-    /**
-     * Create a new message instance.
-     *
-     * @param  \App\Models\Order  $order
-     * @return void
-     */
-    public function __construct($order)
+    public function __construct(Order $order)
     {
         $this->order = $order;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
         return $this->view('emails.order_confirmed')
                     ->with([
                         'order' => $this->order,
                     ])
-                    ->subject('Your Order has been Confirmed');
+                    ->subject('Your Order Has Been Placed');
     }
 }

@@ -3,7 +3,11 @@
 @section('content')
     <div class="container">
         <!-- Welcome Heading -->
-        <h1 style="font-style: italic" class="text-center mb-5">Welcome to Our E-Commerce Store</h1>
+        <h1 class="text-center mb-2 animated-heading" style="font-style: italic">Welcome to Our E-Commerce Store</h1>
+     <!-- About Us Section -->
+     <p class="text-center mb-5" style="font-style: italic; color: #555;">
+        Discover our passion for quality and service as we bring you a curated <br> selection of products to enhance your shopping experience.
+    </p>
 <!-- Search Form -->
 <div class="search-form-container mb-5">
     <form method="GET" action="{{ route('products.index') }}">
@@ -23,7 +27,7 @@
 
         
         <!-- Bootstrap Carousel -->
-        <div id="carouselExampleIndicators" class="carousel slide mb-5" data-ride="carousel">
+        <div id="carouselExampleIndicators" class="carousel slide mb-3" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -61,18 +65,41 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
+<!-- Trust Bar Section -->
+<div style="background-color: #24262b;" class="trust-bar py-4  text-center mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h5 class="font-weight-bold text-white">50 Million+</h5>
+                <p class="mb-0 text-white">Products Sold</p>
+            </div>
+            <div class="col-md-3">
+                <h5 class="font-weight-bold text-white">★★★★☆</h5>
+                <p class="mb-0 text-white">Trustpilot +100k Reviews</p>
+            </div>
+            <div class="col-md-3">
+                <h5 class="font-weight-bold text-white">Award-Winning</h5>
+                <p class="mb-0 text-white">Customer Service</p>
+            </div>
+            <div class="col-md-3">
+                <h5 class="font-weight-bold text-white">30-Day</h5>
+                <p class="mb-0 text-white">Peace of Mind Returns</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 
         <!-- Categories Section -->
-        <h2 style="font-style: italic" class="text-center mb-4">Shop by Category</h2>
+        <h2 style="font-style: italic" class="text-center mb-4 animated-heading-slide">Shop by Category</h2>
         <div class="row mb-5">
             <div class="col-md-4 mb-4 d-flex justify-content-center">
                 <a href="{{ route('products.index', ['category' => 'men']) }}" class="text-decoration-none">
                     <div class="card text-center shadow border-light" style="width: 18rem;">
                         <img src="{{ asset('storage/images/F0112101711M_3.jpg') }}" class="card-img-top" alt="Men's Category">
                         <div class="card-body">
-                            <h5 class="card-title">Men's</h5>
-                            <p class="card-text">Explore our collection of men's fashion and accessories.</p>
+                            <h5 style="color: black;" class="card-title">Men's</h5>
+                            <p style="color: black;" class="card-text">Explore our collection of men's fashion and accessories.</p>
                         </div>
                     </div>
                 </a>
@@ -82,8 +109,8 @@
                     <div class="card text-center shadow border-light" style="width: 18rem;">
                         <img src="{{ asset('storage/images/F0109202507M_2.jpg') }}" class="card-img-top" alt="Women's Category">
                         <div class="card-body">
-                            <h5 class="card-title">Women's</h5>
-                            <p class="card-text">Discover the latest trends in women's fashion and more.</p>
+                            <h5 style="color: black;" class="card-title">Women's</h5>
+                            <p style="color: black;"  class="card-text">Discover the latest trends in women's fashion and more.</p>
                         </div>
                     </div>
                 </a>
@@ -93,8 +120,8 @@
                     <div class="card text-center shadow border-light" style="width: 18rem;">
                         <img src="{{ asset('storage/images/F0202308128.jpg') }}" class="card-img-top" alt="Kids' Category">
                         <div class="card-body">
-                            <h5 class="card-title">Kids'</h5>
-                            <p class="card-text">Find charming clothes and accessories for kids.</p>
+                            <h5 style="color: black;" class="card-title">Kids'</h5>
+                            <p style="color: black;" class="card-text">Find charming clothes and accessories for kids.</p>
                         </div>
                     </div>
                 </a>
@@ -102,16 +129,16 @@
         </div>
         
 <!-- Our Services Section -->
-<h2 class="text-center mb-5" style="font-style: italic; color: #333;">Our Services</h2>
+<h2 class="text-center mb-5 animated-heading" style="font-style: italic; color: #333;">Our Services</h2>
 <div class="container">
     <div class="row">
         <!-- Fast Delivery Service -->
         <div class="col-md-4 mb-4">
             <div class="service-card text-center shadow border-light p-4">
                 <div class="service-icon mb-3">
-                    <i class="fas fa-truck fa-3x"></i>
+                    <i style="color: #24262b" class="fas fa-truck fa-3x"></i>
                 </div>
-                <h4 class="service-title mb-3">Fast Delivery</h4>
+                <h4  class="service-title mb-3">Fast Delivery</h4>
                 <p class="service-description">We offer speedy delivery to ensure you get your products on time.</p>
             </div>
         </div>
@@ -119,7 +146,7 @@
         <div class="col-md-4 mb-4">
             <div class="service-card text-center shadow border-light p-4">
                 <div class="service-icon mb-3">
-                    <i class="fas fa-certificate fa-3x"></i>
+                    <i style="color: #24262b" class="fas fa-certificate fa-3x"></i>
                 </div>
                 <h4 class="service-title mb-3">Quality Products</h4>
                 <p class="service-description">Our products are sourced from top-quality manufacturers to ensure you get the best.</p>
@@ -129,7 +156,7 @@
         <div class="col-md-4 mb-4">
             <div class="service-card text-center shadow border-light p-4">
                 <div class="service-icon mb-3">
-                    <i class="fas fa-headset fa-3x"></i>
+                    <i style="color: #24262b" class="fas fa-headset fa-3x"></i>
                 </div>
                 <h4 class="service-title mb-3">Customer Support</h4>
                 <p class="service-description">Our support team is here to help you with any inquiries or issues you might have.</p>
@@ -138,7 +165,7 @@
     </div>
 </div>
         <!-- Featured Products Section -->
-        <h2 style="font-style: italic" class="text-center mb-4">Featured Products</h2>
+        <h2 style="font-style: italic animated-heading" class="text-center mb-4">Featured Products</h2>
         <div class="row">
             @foreach ($products as $product)
                 <div class="col-lg-4 mb-4">
@@ -163,7 +190,7 @@
             @endforeach
         </div>
 <!-- Testimonials Section -->
-<h2 class="text-center mb-5" style="font-style: italic; color: #333;">What Our Customers Say</h2>
+<h2 class="text-center mb-5 mt-5 animated-heading" style="font-style: italic; color: #333;">What Our Customers Say</h2>
 <div class="container">
     <div class="row">
         <div class="col-md-4 mb-4">
@@ -200,7 +227,7 @@
                     <img src="{{ asset('storage/images/depositphotos_420021494-stock-photo-portrait-female-owner-gift-store.jpg') }}" class="testimonial-img" alt="Emily Davis">
                 </div>
                 <div class="testimonial-body">
-                    <p class="testimonial-text">"Exceptional service and great prices! I always find what I need and more."</p>
+                    <p class="testimonial-text">"Exceptional service and great <br> prices! I always find what I need and the wide variety of products available. Highly recommend!"</p>
                     <footer class="testimonial-footer">
                         <p class="customer-name">Emily Davis</p>
                         <p class="customer-role">Happy Shopper</p>
@@ -220,3 +247,70 @@
         
     </div>
 @endsection
+{{-- 
+  <!-- Categories Section -->
+  <h2 style="font-style: italic" class="text-center mb-4 animated-heading-slide">Shop by Category</h2>
+
+  <div class="category-tabs text-center mb-4">
+      <ul class="nav nav-tabs justify-content-center">
+          <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#everyday">Men</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#travel">Women</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#lounging">Kids</a>
+          </li>
+      </ul>
+  </div>
+
+  <div class="tab-content">
+      <div id="everyday" class="container tab-pane active">
+          <div class="row">
+              <div class="col-md-4 mb-4 d-flex justify-content-center">
+                  <a href="{{ route('products.index', ['category' => 'men']) }}" class="text-decoration-none">
+                      <div class="card text-center shadow border-light">
+                          <img src="{{ asset('storage/images/F0112101711M_3.jpg') }}" class="card-img-top" alt="Men's Category">
+                          <div class="card-body">
+                              <h5 style="color: black;" class="card-title">Men's</h5>
+                              <p style="color: black;" class="card-text">Explore our collection of men's fashion and accessories.</p>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+          </div>
+      </div>
+
+      <div id="travel" class="container tab-pane fade">
+          <div class="row">
+              <div class="col-md-4 mb-4 d-flex justify-content-center">
+                  <a href="{{ route('products.index', ['category' => 'women']) }}" class="text-decoration-none">
+                      <div class="card text-center shadow border-light">
+                          <img src="{{ asset('storage/images/F0109202507M_2.jpg') }}" class="card-img-top" alt="Women's Category">
+                          <div class="card-body">
+                              <h5 style="color: black;" class="card-title">Women's</h5>
+                              <p style="color: black;" class="card-text">Discover the latest trends in women's fashion and more.</p>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+          </div>
+      </div>
+
+      <div id="lounging" class="container tab-pane fade">
+          <div class="row">
+              <div class="col-md-4 mb-4 d-flex justify-content-center">
+                  <a href="{{ route('products.index', ['category' => 'kids']) }}" class="text-decoration-none">
+                      <div class="card text-center shadow border-light">
+                          <img src="{{ asset('storage/images/F0202308128.jpg') }}" class="card-img-top" alt="Kids' Category">
+                          <div class="card-body">
+                              <h5 style="color: black;" class="card-title">Kids'</h5>
+                              <p style="color: black;" class="card-text">Find charming clothes and accessories for kids.</p>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+          </div>
+      </div>
+  </div> --}}

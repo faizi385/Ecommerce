@@ -1,23 +1,46 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Mail\OrderConfirmed;
+use Illuminate\Http\Request;
+use App\Notifications\OrderPlaced;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
-    public function store(Request $request)
-    {
-        // Validation is now removed as we are no longer handling payment receipts
-        $order = new Order();
-        $order->user_id = auth()->id();
-        $order->status = 'pending';
-        $order->save();
+   public function store(Request $request)
+{
+    // Validate the request
+    $validated = $request->validate([
+        'total' => 'required|numeric',
+        'product_name' => 'nullable|string',
+        'product_price' => 'nullable|numeric',
+    ]);
 
-        return redirect()->route('orders.index')->with('success', 'Order placed successfully!');
+    // Create the order
+    $order = Order::create([
+        'user_id' => Auth::id(),
+        'total' => $validated['total'],
+        'status' => 'pending',
+        'product_name' => $validated['product_name'],
+        'product_price' => $validated['product_price'],
+    ]);
+
+    // Check if order was created
+    if (!$order) {
+        return redirect()->route('orders.create')->withErrors('Failed to create order.');
     }
+
+    // Send email to the authenticated user
+    $user = Auth::user();
+    Mail::to($user->email)->send(new OrderConfirmed($order));
+
+    return redirect()->route('orders.index')->with('success', 'Order placed successfully.');
+}
+
+    
 
     public function create()
     {
@@ -58,4 +81,13 @@ class OrderController extends Controller
     
         return redirect()->route('orders.index')->with('success', 'Order status updated successfully.');
     }
+    
+
+    public function show($id)
+    {
+        $order = Order::findOrFail($id);
+        return view('orders.show', compact('order'));
+    }
+    
+    
 }

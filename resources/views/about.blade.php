@@ -31,7 +31,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="team-member text-center">
-                                    <img src="https://via.placeholder.com/150" alt="Team Member" class="img-fluid rounded-circle mb-2">
+                                    <img src="{{ asset('storage/images/testimonial-edward.png') }}" alt="Team Member" class="img-fluid rounded-circle mb-2">
                                     <h5>Jane Doe</h5>
                                     <p>CEO & Founder</p>
                                     <p>Jane is the visionary behind [Your Company Name], leading the company with a passion for excellence and innovation.</p>
@@ -39,7 +39,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="team-member text-center">
-                                    <img src="https://via.placeholder.com/150" alt="Team Member" class="img-fluid rounded-circle mb-2">
+                                    <img src="{{ asset('storage/images/Matt-T-Testimonial-pic.jpg') }}" alt="Team Member" class="img-fluid rounded-circle mb-2">
                                     <h5>John Smith</h5>
                                     <p>Chief Technology Officer</p>
                                     <p>John is responsible for overseeing the technology and innovation strategies that drive our products forward.</p>
@@ -47,7 +47,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="team-member text-center">
-                                    <img src="https://via.placeholder.com/150" alt="Team Member" class="img-fluid rounded-circle mb-2">
+                                    <img src="{{ asset('storage/images/depositphotos_420021494-stock-photo-portrait-female-owner-gift-store.jpg') }}"alt="Team Member" class="img-fluid rounded-circle mb-2">
                                     <h5>Emily Johnson</h5>
                                     <p>Head of Marketing</p>
                                     <p>Emily leads our marketing efforts, ensuring that our brand message resonates with our audience.</p>

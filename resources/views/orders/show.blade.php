@@ -23,8 +23,10 @@
                     <h5 class="card-title">Status</h5>
                     @if ($order->status === 'pending')
                         <span class="badge bg-warning text-dark">Pending</span>
-                    @elseif ($order->status === 'approved')
-                        <span class="badge bg-success">Approved</span>
+                    @elseif ($order->status === 'delivered')
+                        <span class="badge bg-success">Delievered</span>
+                        @elseif ($order->status === 'shipped')
+                        <span class="badge bg-success">Shipped</span>
                     @elseif ($order->status === 'canceled')
                         <span class="badge bg-danger">Canceled</span>
                     @else

@@ -24,7 +24,7 @@
                     <li>
                         <a href="{{ route('welcome') }}" class="text-white">View Store</a>
                     </li>
-                    <li style="margin-top: 280px" class="">
+                    <li style="margin-top: 280px">
                         <a href="{{ route('logout') }}" class="text-white" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
@@ -40,46 +40,58 @@
                 <div class="row">
                     <!-- Card 1: Total Orders -->
                     <div class="col-md-3 mb-3">
-                        <div class="card bg-light border-primary">
-                            <div class="card-header bg-primary text-white">Total Orders</div>
-                            <div class="card-body">
-                                <h5 class="card-title text-dark">{{ $totalOrders }}</h5>
-                                <p class="card-text text-dark">Total number of orders placed.</p>
+                        <a href="{{ route('orders.index') }}" class="text-decoration-none">
+                            <div class="card bg-light border-primary d-flex align-items-center">
+                                <div class="card-body text-center">
+                                    <h4 class="card-title text-primary">Total Orders</h4>
+                                    <i class="fas fa-box-open fa-2x mb-2 text-primary"></i>
+                                    <h5 class="card-number text-dark">{{ $totalOrders }}</h5>
+                                    <p class="card-text text-dark">Total number of orders placed.</p>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     
                     <!-- Card 2: Total Products -->
                     <div class="col-md-3 mb-3">
-                        <div class="card bg-light border-success">
-                            <div class="card-header bg-success text-white">Total Products</div>
-                            <div class="card-body">
-                                <h5 class="card-title text-dark">{{ $totalProducts }}</h5>
-                                <p class="card-text text-dark">Total number of products available.</p>
+                        <a href="{{ route('products.index') }}" class="text-decoration-none">
+                            <div class="card bg-light border-success d-flex align-items-center">
+                                <div class="card-body text-center">
+                                    <h4 class="card-title text-success">Total Products</h4>
+                                    <i class="fas fa-cube fa-2x mb-2 text-success"></i>
+                                    <h5 class="card-number text-dark">{{ $totalProducts }}</h5>
+                                    <p class="card-text text-dark">Total number of products available.</p>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     
                     <!-- Card 3: Pending Orders -->
                     <div class="col-md-3 mb-3">
-                        <div class="card bg-light border-warning">
-                            <div class="card-header bg-warning text-dark">Pending Orders</div>
-                            <div class="card-body">
-                                <h5 class="card-title text-dark">{{ $pendingOrders }}</h5>
-                                <p class="card-text text-dark">Orders that are pending approval.</p>
+                        <a href="{{ route('orders.index') }}" class="text-decoration-none">
+                            <div class="card bg-light border-warning d-flex align-items-center">
+                                <div class="card-body text-center">
+                                    <h4 class="card-title text-warning">Pending Orders</h4>
+                                    <i class="fas fa-clock fa-2x mb-2 text-warning"></i>
+                                    <h5 class="card-number text-dark">{{ $pendingOrders }}</h5>
+                                    <p class="card-text text-dark">Orders that are pending approval.</p>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     
                     <!-- Card 4: Revenue -->
                     <div class="col-md-3 mb-3">
-                        <div class="card bg-light border-danger">
-                            <div class="card-header bg-danger text-white">Total Revenue</div>
-                            <div class="card-body">
-                                <h5 class="card-title text-dark">${{ $totalRevenue }}</h5>
-                                <p class="card-text text-dark">Total revenue generated from orders.</p>
+                        <a href="{{ route('orders.index') }}" class="text-decoration-none">
+                            <div class="card bg-light border-danger d-flex align-items-center">
+                                <div class="card-body text-center">
+                                    <h4 class="card-title text-danger">Total Revenue</h4>
+                                    <i class="fas fa-dollar-sign fa-2x mb-2 text-danger"></i>
+                                    <h5 class="card-number text-dark">${{ $totalRevenue }}</h5>
+                                    <p class="card-text text-dark">Total revenue generated from orders.</p>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
 

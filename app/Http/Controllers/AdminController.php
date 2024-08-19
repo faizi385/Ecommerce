@@ -13,7 +13,7 @@ class AdminController extends Controller
         $totalOrders = Order::count();
         $totalProducts = Product::count();
         $pendingOrders = Order::where('status', 'pending')->count();
-        $totalRevenue = Order::where('status', 'approved')->sum('total');
+        $totalRevenue = Order::where('status', 'delivered')->sum('total');
 
         return view('dashboard', compact('totalOrders', 'totalProducts', 'pendingOrders', 'totalRevenue'));
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Mail\OrderConfirmed;
 use Illuminate\Http\Request;
+use App\Mail\OrderStatusChanged;
 use App\Notifications\OrderPlaced;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -66,21 +67,21 @@ class OrderController extends Controller
     {
         // Validate the request
         $request->validate([
-            'status' => 'required|in:pending,approved,canceled',
+            'status' => 'required|in:pending,processing,shipped,delivered,canceled',
         ]);
     
         // Update order status
         $order->status = $request->status;
         $order->save();
     
-        // Send email if the status is approved
-        if ($order->status === 'approved') {
-            // For testing purposes, sending email to a specific address
-            Mail::to($order->user->email)->send(new OrderConfirmed($order));
+        // Send email if the status is processing or delivered
+        if ($order->status === 'processing' || $order->status === 'delivered') {
+            Mail::to($order->user->email)->send(new OrderStatusChanged($order));
         }
     
         return redirect()->route('orders.index')->with('success', 'Order status updated successfully.');
     }
+    
     
 
     public function show($id)

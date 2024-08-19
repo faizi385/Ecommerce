@@ -9,7 +9,7 @@
                 <!-- Order Details Column -->
                 <div class="col-md-8">
                     @foreach ($cart as $id => $item)
-                        <div class="card mb-4 shadow-sm">
+                        <div class=" mb-4 shadow-sm">
                             <div class="row no-gutters">
                                 <div class="col-md-4">
                                     @if (isset($item['image']))
@@ -43,7 +43,7 @@
 
                 <!-- Total Price Column -->
                 <div class="col-md-4">
-                    <div class="card border-light shadow-sm">
+                    <div class=" border-light shadow-sm">
                         <div class="card-body">
                             <h3 class="text-center mb-4">Cart Summary</h3>
                             <p class="card-text">Total Items: <span id="cart-total-items">{{ count($cart) }}</span></p>

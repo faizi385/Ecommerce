@@ -603,3 +603,24 @@ blockquote footer {
 .animated-heading-slide {
     animation: slideInLeft 1s ease-out;
 }
+
+
+    /* Customizing the carousel control arrows */
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: black; /* Set the background color of the arrows */
+        border-radius: 50%; /* Make the background circular */
+        width: 30px; /* Adjust the size of the arrows */
+        height: 30px; /* Adjust the size of the arrows */
+    }
+    
+    .carousel-control-prev-icon::before,
+    .carousel-control-next-icon::before {
+        color: white; /* Set the arrow color */
+    }
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 5%; /* Adjust the width of the controls if needed */
+    }
+

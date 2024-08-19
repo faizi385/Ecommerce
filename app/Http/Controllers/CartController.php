@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\DiscountCode;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -104,6 +105,27 @@ class CartController extends Controller
         return redirect()->route('cart.index')->with('success', 'Product removed from cart!');
     }
 
+    public function applyDiscount(Request $request)
+    {
+        $request->validate([
+            'discount_code' => 'required|string',
+        ]);
+    
+        $discountCode = DiscountCode::where('code', $request->discount_code)
+                                     ->where('is_active', true)
+                                     ->first();
+    
+        if (!$discountCode) {
+            return back()->withErrors(['discount_code' => 'Invalid or expired discount code.']);
+        }
+    
+        // Store the discount amount in the session or use it in your calculation directly
+        session(['discount_amount' => $discountCode->discount_amount]);
+    
+        return redirect()->route('checkout.index')->with('success', 'Discount code applied successfully!');
+    }
+
+    
     public function checkout(Request $request)
     {
         $cart = session()->get('cart', []);
@@ -111,27 +133,46 @@ class CartController extends Controller
         if (empty($cart)) {
             return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
-
+    
         // Calculate total price
         $total = array_sum(array_map(function($item) {
             return $item['price'] * $item['quantity'];
         }, $cart));
+    
+        $discountAmount = 0;
+    
+        // Check if a discount code is provided
+        if ($request->filled('discount_code')) {
+            $discountCode = DiscountCode::where('code', $request->discount_code)
+                                        ->where('is_active', true)
+                                        ->first();
+    
+            if ($discountCode) {
+                $discountAmount = $discountCode->discount_amount;
+                // Ensure the discount doesn't make the total negative
+                $total = max($total - $discountAmount, 0);
+            } else {
+                return redirect()->back()->with('error', 'Invalid or expired discount code.');
+            }
+        }
     
         // Create a new order with the total price
         $order = Order::create([
             'user_id' => auth()->id(),
             'status' => 'pending',
             'total' => $total, // Include the total field
+            'discount_code' => $request->discount_code, // Store the applied discount code
+            'discount_amount' => $discountAmount, // Store the applied discount amount
         ]);
     
         // Add order items (if you have an order_items table or similar)
-        // foreach ($cart as $item) {
-        //     $order->items()->create([
-        //         'product_id' => $item['product_id'],
-        //         'quantity' => $item['quantity'],
-        //         'price' => $item['price'], // Adjust based on your structure
-        //     ]);
-        // }
+        foreach ($cart as $item) {
+            $order->items()->create([
+                'product_id' => $item['product_id'],
+                'quantity' => $item['quantity'],
+                'price' => $item['price'], // Adjust based on your structure
+            ]);
+        }
     
         // Clear the cart
         $request->session()->forget('cart');

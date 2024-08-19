@@ -10,7 +10,16 @@
             <div class="card-m shadow-sm border-0 rounded p-4">
                 <form action="{{ route('cart.checkout') }}" method="POST">
                     @csrf
-
+                    <div class="form-row">
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="first_name">First Name</label>
+                            <input type="text" class="form-control form-control-lg" id="first_name" name="first_name" placeholder="Enter your first name" required>
+                        </div>
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" class="form-control form-control-lg" id="last_name" name="last_name" placeholder="Enter your last name" required>
+                        </div>
+                    </div>
                     <!-- Address Details Section -->
                     <div class="mb-4">
                         <h5 class="mb-3">Address Details</h5>
@@ -20,18 +29,6 @@
                             <input type="text" class="form-control form-control-lg" id="address" name="address" placeholder="Enter your address" required>
                         </div>
 
-                        <!-- First Name, Last Name, City, and Country in One Line -->
-                        <div class="form-row">
-                            <div class="form-group col-md-6 mb-3">
-                                <label for="first_name">First Name</label>
-                                <input type="text" class="form-control form-control-lg" id="first_name" name="first_name" placeholder="Enter your first name" required>
-                            </div>
-                            <div class="form-group col-md-6 mb-3">
-                                <label for="last_name">Last Name</label>
-                                <input type="text" class="form-control form-control-lg" id="last_name" name="last_name" placeholder="Enter your last name" required>
-                            </div>
-                        </div>
-
                         <div class="form-row">
                             <div class="form-group col-md-6 mb-3">
                                 <label for="city">City</label>
@@ -39,7 +36,15 @@
                             </div>
                             <div class="form-group col-md-6 mb-3">
                                 <label for="country">Country</label>
-                                <input type="text" class="form-control form-control-lg" id="country" name="country" placeholder="Enter your country" required>
+                                <select class="form-control form-control-lg" id="country" name="country" required>
+                                    <option value="">Select your country</option>
+                                    <option value="Pakistan">Pakistan</option>
+                                    <option value="India">India</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="Australia">Australia</option>
+                                    <option value="Germany">Germany</option>
+                                    <option value="France">France</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -51,6 +56,12 @@
                             <input type="checkbox" class="form-check-input" id="cash_on_delivery" name="payment" value="cash_on_delivery" required>
                             <label class="form-check-label" for="cash_on_delivery">I agree to pay with Cash on Delivery</label>
                         </div>
+                    </div>
+
+                    <!-- Discount Code Section -->
+                    <div class="form-group mb-3">
+                        <label for="discount_code">Discount Code:</label>
+                        <input type="text" class="form-control form-control-lg" id="discount_code" name="discount_code" placeholder="Enter your discount code">
                     </div>
 
                     <!-- Additional Notes -->

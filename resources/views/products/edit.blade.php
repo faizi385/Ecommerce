@@ -17,10 +17,10 @@
                 <input type="number" id="price" name="price" class="form-control" step="0.01" value="{{ old('price', $product->price) }}" required>
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="stock">Stock</label>
                 <input type="number" id="stock" name="stock" class="form-control" value="{{ old('stock', $product->stock) }}" required>
-            </div>
+            </div> --}}
 
             <div class="form-group">
                 <label for="category_id">Category</label>

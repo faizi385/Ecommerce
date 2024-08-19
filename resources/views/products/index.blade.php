@@ -29,10 +29,10 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <form action="{{ route('cart.add', $product->id) }}" method="POST" class="d-inline">
                                         @csrf
-                                        <button type="submit" class="btn btn-secondary add-to-cart">
+                                        {{-- <button type="submit" class="btn btn-secondary add-to-cart">
                                             Add to Cart
                                             <i class="fas fa-shopping-cart ml-2"></i>
-                                        </button>
+                                        </button> --}}
                                     </form>
                                     @if (auth()->user() && auth()->user()->hasRole('Admin'))
                                         <div class="btn-group" role="group">

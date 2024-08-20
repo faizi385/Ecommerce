@@ -24,8 +24,8 @@
                     @if ($order->status === 'pending')
                         <span class="badge bg-warning text-dark">Pending</span>
                     @elseif ($order->status === 'delivered')
-                        <span class="badge bg-success">Delievered</span>
-                        @elseif ($order->status === 'shipped')
+                        <span class="badge bg-success">Delivered</span>
+                    @elseif ($order->status === 'shipped')
                         <span class="badge bg-success">Shipped</span>
                     @elseif ($order->status === 'canceled')
                         <span class="badge bg-danger">Canceled</span>
@@ -49,27 +49,18 @@
         <div class="col-md-6">
             <div class="card shadow-sm border-light mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Product Name</h5>
-                    <p class="card-text">Character Graphic T-Shirt</p>
+                    <h5 class="card-title">Products</h5>
+                    <p class="card-text">{{ $order->name }}</p>
+                    <h5 class="card-title">Price</h5>
+                    <p class="card-text">${{ $order->price }}</p>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- <div class="row mb-4">
-        <div class="col-md-6">
-            <div class="card-k shadow-sm border-light mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Price</h5>
-                    <p class="card-text">${{ number_format($order->price, 2) }}</p>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
     <!-- Back Button -->
     <div class="text-center">
-        <a style="background-color: #021526" href="{{ route('orders.index') }}" class="btn text-white  btn-lg">Back to Orders</a>
+        <a style="background-color: #021526" href="{{ route('orders.index') }}" class="btn text-white btn-lg">Back to Orders</a>
     </div>
 </div>
 @endsection

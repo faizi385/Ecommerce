@@ -16,8 +16,8 @@ class OrderController extends Controller
     // Validate the request
     $validated = $request->validate([
         'total' => 'required|numeric',
-        'product_name' => 'nullable|string',
-        'product_price' => 'nullable|numeric',
+        'name' => 'nullable|string',
+        'price' => 'nullable|numeric',
     ]);
 
     // Create the order
@@ -25,8 +25,8 @@ class OrderController extends Controller
         'user_id' => Auth::id(),
         'total' => $validated['total'],
         'status' => 'pending',
-        'product_name' => $validated['product_name'],
-        'product_price' => $validated['product_price'],
+        'name' => $validated['name'],
+        'price' => $validated['price'],
     ]);
 
     // Check if order was created

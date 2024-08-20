@@ -186,7 +186,7 @@
         "dom": '<"top"f>rt<"bottom"p><"clear">',
         "language": {
             "search": "_INPUT_",
-            "searchPlaceholder": "Search tasks..."
+            "searchPlaceholder": "Search..."
         }
         });
 

@@ -59,9 +59,15 @@
                     </div>
 
                     <!-- Discount Code Section -->
-                    <div class="form-group mb-3">
-                        <label for="discount_code">Discount Code:</label>
-                        <input type="text" class="form-control form-control-lg" id="discount_code" name="discount_code" placeholder="Enter your discount code">
+                    <!-- Discount Code Field -->
+                    <div class="form-group mb-4">
+                        <label for="discount_code">Discount Code</label>
+                        <input type="text" class="form-control form-control-lg @error('discount_code') is-invalid @enderror" id="discount_code" name="discount_code" value="{{ old('discount_code') }}" placeholder="Enter your discount code">
+                        @error('discount_code')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
 
                     <!-- Additional Notes -->

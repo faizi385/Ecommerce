@@ -19,10 +19,10 @@
                 <table class="table table-striped table-bordered">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Order ID</th>
-                            <th>Status</th>
+                            <th>User ID</th>
+                            <th>Products</th>
                             <th>Total</th>
-                            {{-- <th>Products</th> --}}
+                            <th>Status</th>
                             @if (auth()->user()->hasRole('Admin'))
                                 <th>Actions</th>
                             @endif
@@ -31,7 +31,9 @@
                     <tbody>
                         @foreach ($orders as $order)
                             <tr>
-                                <td>{{ $order->id }}</td>
+                                <td>{{ $order->user_id }}</td>
+                                <td>{{ $order->name }}</td> <!-- Display concatenated product names -->
+                                <td>${{ number_format($order->total, 2) }}</td>
                                 <td>
                                     @if ($order->status === 'pending')
                                         <span class="badge bg-warning text-dark">Pending</span>
@@ -47,15 +49,8 @@
                                         <span class="badge bg-secondary">Unknown</span>
                                     @endif
                                 </td>
-                                <td>${{ $order->total }}</td>
-                                {{-- <td>
-                                    @foreach ($order->items as $item)
-                                        <div>{{ $item->product->name }} ({{ $item->quantity }})</div>
-                                    @endforeach
-                                </td> --}}
                                 @if (auth()->user()->hasRole('Admin'))
                                     <td>
-                                        <a href="{{ route('orders.show', $order->id) }}" class="btn btn-info btn-sm">View Details</a>
                                         @if (in_array($order->status, ['pending', 'processing', 'shipped']))
                                             <form action="{{ route('orders.update', $order->id) }}" method="POST" class="form-inline d-inline">
                                                 @csrf
@@ -105,4 +100,34 @@
             });
         }
     </script>
+
+    <style>
+        .table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .table thead th {
+            background-color: #343a40;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .badge {
+            font-size: 0.9rem;
+            padding: 0.5em 1em;
+        }
+
+        .form-control-sm {
+            height: calc(1.5em + .75rem + 2px);
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+    </style>
 @endsection

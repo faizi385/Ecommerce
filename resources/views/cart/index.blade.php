@@ -9,7 +9,7 @@
                 <!-- Order Details Column -->
                 <div class="col-md-8">
                     @foreach ($cart as $id => $item)
-                        <div class=" mb-4 shadow-sm">
+                        <div class="mb-4 shadow-sm">
                             <div class="row no-gutters">
                                 <div class="col-md-4">
                                     @if (isset($item['image']))
@@ -43,13 +43,32 @@
 
                 <!-- Total Price Column -->
                 <div class="col-md-4">
-                    <div class=" border-light shadow-sm">
+                    <div class="border-light shadow-sm">
                         <div class="card-body">
                             <h3 class="text-center mb-4">Cart Summary</h3>
                             <p class="card-text">Total Items: <span id="cart-total-items">{{ count($cart) }}</span></p>
-                            <h4 class="text-center mb-4">Total: $<span id="cart-total-summary">{{ number_format(array_sum(array_map(function($item) {
-                                return $item['price'] * $item['quantity'];
-                            }, $cart)), 2) }}</span></h4>
+
+                            <!-- Discount Coupon Form -->
+                            <form action="{{ route('cart.applyDiscount') }}" method="POST">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="discount_code">Discount Code</label>
+                                    <input type="text" name="discount_code" id="discount_code" class="form-control" placeholder="Enter discount code">
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block mb-4">Apply Discount</button>
+                            </form>
+
+                            @if (session('discount'))
+                                <p class="card-text">Discount: $<span id="discount-amount">{{ number_format(session('discount')['amount'], 2) }}</span></p>
+                                <h4 class="text-center mb-4">New Total: $<span id="new-cart-total-summary">{{ number_format(array_sum(array_map(function($item) {
+                                    return $item['price'] * $item['quantity'];
+                                }, $cart)) - session('discount')['amount'], 2) }}</span></h4>
+                            @else
+                                <h4 class="text-center mb-4">Total: $<span id="cart-total-summary">{{ number_format(array_sum(array_map(function($item) {
+                                    return $item['price'] * $item['quantity'];
+                                }, $cart)), 2) }}</span></h4>
+                            @endif
+
                             <a href="{{ route('checkout') }}" class="btn btn-primary btn-block">Checkout</a>
                             <a href="{{ route('welcome') }}" class="btn btn-secondary btn-block mt-2">Shop More</a>
                         </div>
@@ -60,72 +79,6 @@
             <p class="text-center">Your cart is empty.</p>
         @endif
     </div>
-
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const updateCartTotal = () => {
-                    let total = 0;
-                    let totalItems = 0;
-                    document.querySelectorAll('.card').forEach(card => {
-                        const price = parseFloat(card.querySelector('.price').getAttribute('data-price'));
-                        const quantity = parseInt(card.querySelector('.quantity').value);
-                        const totalPriceElement = card.querySelector('.total-price');
-                        const itemTotal = price * quantity;
-                        totalPriceElement.innerText = itemTotal.toFixed(2);
-                        total += itemTotal;
-                        totalItems += quantity;
-                    });
-                    document.getElementById('cart-total-summary').innerText = total.toFixed(2);
-                    document.getElementById('cart-total-items').innerText = totalItems;
-                };
-
-                const updateQuantity = (id, quantity) => {
-                    fetch(`/cart/update/${id}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({ quantity })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            updateCartTotal();
-                        } else {
-                            console.error('Failed to update cart.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                };
-
-                document.querySelectorAll('.adjust-quantity').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const id = this.getAttribute('data-id');
-                        const action = this.getAttribute('data-action');
-                        const quantityInput = this.closest('.card').querySelector('.quantity');
-                        let quantity = parseInt(quantityInput.value);
-
-                        if (action === 'increase') {
-                            quantity++;
-                        } else if (action === 'decrease' && quantity > 1) {
-                            quantity--;
-                        }
-
-                        quantityInput.value = quantity;
-
-                        updateCartTotal();
-                        updateQuantity(id, quantity);
-                    });
-                });
-
-                updateCartTotal();
-            });
-        </script>
-    @endpush
 
     @push('styles')
         <style>

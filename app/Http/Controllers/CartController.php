@@ -22,10 +22,8 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'Product not found.');
         }
     
-        // Validate the size if needed
-        $size = $request->input('size', 'M'); // Default size if not provided
+        $size = $request->input('size', 'M');
     
-        // Check if size is valid if size is required
         if (!in_array($size, ['S', 'M', 'L', 'XL'])) {
             return redirect()->back()->withErrors('Invalid size selected.');
         }
@@ -33,17 +31,15 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
     
         if (isset($cart[$productId])) {
-            // Increase quantity if product already in cart
             $cart[$productId]['quantity'] += 1;
         } else {
-            // Add product to cart with size
             $cart[$productId] = [
-                'product_id' => $productId, // Ensure product_id is included
+                'product_id' => $productId,
                 'name' => $product->name,
                 'price' => $product->price,
                 'image' => $product->image,
                 'quantity' => 1,
-                'size' => $size, // Add size here
+                'size' => $size,
             ];
         }
     
@@ -51,7 +47,6 @@ class CartController extends Controller
     
         return redirect()->back()->with('success', 'Product added to cart!');
     }
-    
 
     public function getCartContents()
     {
@@ -85,7 +80,7 @@ class CartController extends Controller
 
         if (isset($cart[$id])) {
             $cart[$id]['quantity'] = $request->input('quantity');
-            $cart[$id]['size'] = $request->input('size'); // Update size
+            $cart[$id]['size'] = $request->input('size');
             session()->put('cart', $cart);
 
             return response()->json(['success' => true, 'message' => 'Quantity updated!']);
@@ -108,65 +103,49 @@ class CartController extends Controller
 
     public function applyDiscount(Request $request)
     {
-        $request->validate([
-            'discount_code' => 'required|string',
-        ]);
+        $discountCode = $request->input('discount_code');
+        $validCodes = [
+            'SAVE10' => 10,
+            'SAVE20' => 20,
+        ];
 
-        $discountCode = DiscountCode::where('code', $request->discount_code)
-                                     ->where('is_active', true)
-                                     ->first();
+        if (array_key_exists($discountCode, $validCodes)) {
+            $discountAmount = $validCodes[$discountCode];
+            session(['discount' => [
+                'code' => $discountCode,
+                'amount' => $discountAmount,
+            ]]);
 
-        if (!$discountCode) {
-            return back()->withErrors(['discount_code' => 'Invalid or expired discount code.']);
+            return redirect()->back()->with('success', 'Discount applied successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Invalid discount code.');
         }
-
-        // Store the discount amount in the session or use it in your calculation directly
-        session(['discount_amount' => $discountCode->discount_amount]);
-
-        return redirect()->route('checkout.index')->with('success', 'Discount code applied successfully!');
     }
 
     public function checkout(Request $request)
     {
         $cart = session()->get('cart', []);
-        
+    
         if (empty($cart)) {
             return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
     
-        // Calculate total price
-        $total = array_sum(array_map(function($item) {
+        // Calculate the total from the cart items
+        $total = array_sum(array_map(function ($item) {
             return $item['price'] * $item['quantity'];
         }, $cart));
-        
-        $discountAmount = 0;
     
-        // Check if a discount code is provided
-        if ($request->filled('discount_code')) {
-            $discountCode = DiscountCode::where('code', $request->discount_code)
-                                        ->where('is_active', true)
-                                        ->first();
-    
-            if ($discountCode) {
-                $discountAmount = $discountCode->discount_amount;
-                // Ensure the discount doesn't make the total negative
-                $total = max($total - $discountAmount, 0);
-            } else {
-                return redirect()->back()->with('error', 'Invalid or expired discount code.');
-            }
-        }
-    
-        // Create a new order with the total price
+        // Create the order with the calculated total
         $order = Order::create([
             'user_id' => auth()->id(),
             'status' => 'pending',
-            'total' => $total,
-            'discount_code' => $request->discount_code,
-            'discount_amount' => $discountAmount,
-            'name' => implode(', ', array_column($cart, 'name')), // Store product names
+            'total' => $total, // Store the total after calculating from cart
+            'name' => implode(', ', array_map(function($item) {
+            return $item['name'] . ' (Qty: ' . $item['quantity'] . ')';
+        }, $cart)), // Optional: concatenating product names
         ]);
     
-        // Add product details to the orders table
+        // Iterate through the cart and save each item to the order
         foreach ($cart as $item) {
             $order->update([
                 'product_id' => $item['product_id'], // Ensure this matches your table structure
@@ -175,12 +154,10 @@ class CartController extends Controller
             ]);
         }
     
-        // Clear the cart
+        // Clear the cart after order placement
         $request->session()->forget('cart');
     
         return redirect()->route('orders.index')->with('success', 'Order placed successfully!');
     }
-    
-    
     
 }

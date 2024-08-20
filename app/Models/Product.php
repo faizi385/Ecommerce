@@ -31,6 +31,12 @@ protected $fillable = [
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function wishlistedBy()
+{
+    return $this->belongsToMany(User::class, 'wishlists');
+}
+
     public function order()
     {
         return $this->hasMany(OrderItem::class);

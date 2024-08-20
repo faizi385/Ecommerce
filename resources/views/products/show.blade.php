@@ -15,7 +15,6 @@
             <div class="col-lg-6">
                 <h2 class="mb-3">Details</h2>
                 <p><strong>Price:</strong> ${{ number_format($product->price, 2) }}</p>
-                
                 <p><strong>Category:</strong> {{ $product->category->name ?? 'N/A' }}</p>
                 <p><strong>Description:</strong> Elevate your wardrobe with our Classic Cotton Shirt, designed for both comfort and style. Crafted from 100% premium cotton, this shirt offers a soft, breathable feel perfect for everyday wear. The timeless design features a tailored fit, a crisp collar, and button-down closure for a polished look. Available in a variety of colors, this versatile shirt is ideal for both casual and semi-formal occasions. Whether paired with jeans for a relaxed vibe or with chinos for a more refined appearance, the Classic Cotton Shirt is a staple piece that combines elegance with practicality.</p>
                 
@@ -51,9 +50,19 @@
                         </div>
                     </div>
 
+                    <!-- Add to Cart Button -->
                     <button type="submit" class="btn btn-custom mt-3">
                         Add to Cart
                         <i class="fas fa-arrow-right ml-2"></i> <!-- Arrow icon -->
+                    </button>
+                </form>
+
+                <!-- Add to Wishlist Button -->
+                <form action="{{ route('wishlist.add', $product->id) }}" method="POST" class="mt-2">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-secondary">
+                        Add to Wishlist
+                        <i style="color:red " class="fas fa-heart ml-2"></i> <!-- Heart icon -->
                     </button>
                 </form>
             </div>

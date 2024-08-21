@@ -24,7 +24,16 @@
                     <li>
                         <a href="{{ route('welcome') }}" class="text-white">View Store</a>
                     </li>
-                    <li style="margin-top: 280px">
+                    <li>
+                        <a href="#sections" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-white">Sections</a>
+                        <ul class="collapse list-unstyled" id="sections">
+                            <li>
+                                <a href="{{ route('admin.sections.edit') }}" class="text-white">Edit Homepage Section</a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li style="margin-top: 240px">
                         <a href="{{ route('logout') }}" class="text-white" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf

@@ -15,6 +15,24 @@
                 You have no orders.
             </div>
         @else
+
+   <!-- Filter Form -->
+ 
+<form method="GET" action="{{ route('orders.index') }}" class="mb-1">
+<div class="d-flex justify-content-end mb-2">
+    <div class="form-group">
+        <select name="status" id="status" class="form-control" onchange="this.form.submit()">
+            <option value="">-- Select Status --</option>
+            <option value="pending" {{ $status === 'pending' ? 'selected' : '' }}>Pending</option>
+            <option value="processing" {{ $status === 'processing' ? 'selected' : '' }}>Processing</option>
+            <option value="shipped" {{ $status === 'shipped' ? 'selected' : '' }}>Shipped</option>
+            <option value="delivered" {{ $status === 'delivered' ? 'selected' : '' }}>Delivered</option>
+            <option value="completed" {{ $status === 'completed' ? 'selected' : '' }}>Completed</option>
+            <option value="canceled" {{ $status === 'canceled' ? 'selected' : '' }}>Canceled</option>
+        </select>
+    </div>
+</div>
+</form>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">
                     <thead class="thead-dark">

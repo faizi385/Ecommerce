@@ -48,6 +48,13 @@
                             <h3 class="text-center mb-4">Cart Summary</h3>
                             <p class="card-text">Total Items: <span id="cart-total-items">{{ count($cart) }}</span></p>
 
+                            <!-- Calculate Previous Total -->
+                            @php
+                                $previousTotal = array_sum(array_map(function($item) {
+                                    return $item['price'] * $item['quantity'];
+                                }, $cart));
+                            @endphp
+
                             <!-- Discount Coupon Form -->
                             <form action="{{ route('cart.applyDiscount') }}" method="POST">
                                 @csrf
@@ -59,17 +66,18 @@
                             </form>
 
                             @if (session('discount'))
-                                <p class="card-text">Discount: $<span id="discount-amount">{{ number_format(session('discount')['amount'], 2) }}</span></p>
-                                <h4 class="text-center mb-4">New Total: $<span id="new-cart-total-summary">{{ number_format(array_sum(array_map(function($item) {
-                                    return $item['price'] * $item['quantity'];
-                                }, $cart)) - session('discount')['amount'], 2) }}</span></h4>
+                                @php
+                                    $discountAmount = session('discount')['amount'];
+                                    $newTotal = $previousTotal - $discountAmount;
+                                @endphp
+                                <p class="card-text">Discount: $<span id="discount-amount">{{ number_format($discountAmount, 2) }}</span></p>
+                                <p class="card-text">Previous Total: $<span id="previous-cart-total-summary">{{ number_format($previousTotal, 2) }}</span></p>
+                                <h4 class="text-center mb-4">New Total: $<span id="new-cart-total-summary">{{ number_format($newTotal, 2) }}</span></h4>
                             @else
-                                <h4 class="text-center mb-4">Total: $<span id="cart-total-summary">{{ number_format(array_sum(array_map(function($item) {
-                                    return $item['price'] * $item['quantity'];
-                                }, $cart)), 2) }}</span></h4>
+                                <h4 class="text-center mb-4">Total: $<span id="cart-total-summary">{{ number_format($previousTotal, 2) }}</span></h4>
                             @endif
 
-                            <a href="{{ route('checkout') }}" class="btn btn-primary btn-block">Checkout</a>
+                            <a href="{{ route('cart.checkout') }}" class="btn btn-primary btn-block">Checkout</a>
                             <a href="{{ route('welcome') }}" class="btn btn-secondary btn-block mt-2">Shop More</a>
                         </div>
                     </div>
@@ -79,7 +87,6 @@
             <p class="text-center">Your cart is empty.</p>
         @endif
     </div>
-
     @push('styles')
         <style>
             .card-img {

@@ -48,19 +48,26 @@ class OrderController extends Controller
         return view('orders.create');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $status = $request->input('status');
+
         if (auth()->user()->hasRole('Admin')) {
-            // Admin sees all orders with related order items and products
-            $orders = Order::with('items.product')->get();
+            $orders = Order::with('items.product')
+                           ->when($status, function ($query, $status) {
+                               return $query->where('status', $status);
+                           })
+                           ->get(); // Retrieve all orders without pagination
         } else {
-            // Regular users see only their orders with related order items and products
             $orders = Order::where('user_id', auth()->id())
                            ->with('items.product')
-                           ->get();
+                           ->when($status, function ($query, $status) {
+                               return $query->where('status', $status);
+                           })
+                           ->get(); // Retrieve all orders without pagination
         }
     
-        return view('orders.index', compact('orders'));
+        return view('orders.index', compact('orders', 'status'));
     }
 
     public function update(Request $request, Order $order)

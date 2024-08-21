@@ -3,6 +3,13 @@
 @section('content')
     <div class="container">
         <!-- Welcome Heading -->
+         {{-- @if ($welcomeSection)
+            <h1 class="text-center">{{ $welcomeSection->title }}</h1>
+            <p class="text-center">{{ $welcomeSection->description }}</p>
+        @else
+            <h1 class="text-center">Welcome</h1>
+            <p class="text-center">This is the default welcome message.</p>
+        @endif --}}
         <h1 class="text-center mb-2 animated-heading" style="font-style: italic">Welcome to Our E-Commerce Store</h1>
      <!-- About Us Section -->
      <p class="text-center mb-5" style="font-style: italic; color: #555;">

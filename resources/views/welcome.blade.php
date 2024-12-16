@@ -3,18 +3,18 @@
 @section('content')
     <div class="container">
         <!-- Welcome Heading -->
-         {{-- @if ($welcomeSection)
-            <h1 class="text-center">{{ $welcomeSection->title }}</h1>
-            <p class="text-center">{{ $welcomeSection->description }}</p>
+         @if ($welcomeSection)
+         <h1 class="text-center mb-2 animated-heading" style="font-style: italic">{{ $welcomeSection->title }}</h1>
+         <p class="text-center mb-5" style="font-style: italic; color: #555;">{{ $welcomeSection->description  }}</p>
         @else
             <h1 class="text-center">Welcome</h1>
             <p class="text-center">This is the default welcome message.</p>
-        @endif --}}
-        <h1 class="text-center mb-2 animated-heading" style="font-style: italic">Welcome to Our E-Commerce Store</h1>
+        @endif
+        {{-- <h1 class="text-center mb-2 animated-heading" style="font-style: italic">Welcome to Our E-Commerce Store</h1>
      <!-- About Us Section -->
      <p class="text-center mb-5" style="font-style: italic; color: #555;">
         Discover our passion for quality and service as we bring you a curated <br> selection of products to enhance your shopping experience.
-    </p>
+    </p> --}}
 <!-- Search Form -->
 <div class="search-form-container mb-5">
     <form method="GET" action="{{ route('products.index') }}">
@@ -34,44 +34,38 @@
 
         
         <!-- Bootstrap Carousel -->
-        <div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img style="height: 60vh; width: 100%; object-fit: cover;" src="{{ asset('storage/images/markus-spiske-BTKF6G-O8fU-unsplash.jpg') }}" class="d-block w-100" alt="Slide 1">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5 class="display-4">LIMITLESS</h5>
-                        <p class="lead">Beyond Your Way.</p>
-                    </div>
+       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        @foreach($carousels as $index => $carousel)
+            <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
+        @endforeach
+    </ol>
+    <div class="carousel-inner">
+        @foreach($carousels as $index => $carousel)
+            <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                <img style="height: 60vh; width: 100%; object-fit: cover;" src="{{ asset('storage/' . $carousel->image_path) }}" class="d-block w-100" alt="Slide {{ $index + 1 }}">
+                @if($carousel->title || $carousel->description)
+                <div class="carousel-caption d-none d-md-block">
+                    @if($carousel->title)
+                        <h5 class="display-4">{{ $carousel->title }}</h5>
+                    @endif
+                    @if($carousel->description)
+                        <p class="lead">{{ $carousel->description }}</p>
+                    @endif
                 </div>
-                <div class="carousel-item">
-                    <img style="height: 60vh; width: 100%; object-fit: cover;" src="{{ asset('storage/images/pexels-khidir-25931061.jpg') }}" class="d-block w-100" alt="Slide 2">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5 class="display-4">Explore More</h5>
-                        <p class="lead">Discover new trends and collections.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img style="height: 60vh; width: 100%; object-fit: cover;" src="{{ asset('storage/images/hannah-morgan-ycVFts5Ma4s-unsplash.jpg') }}" class="d-block w-100" alt="Slide 3">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5 class="display-4">Quality & Style</h5>
-                        <p class="lead">Exceptional products for you.</p>
-                    </div>
-                </div>
+                @endif
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
+        @endforeach
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
 <!-- Trust Bar Section -->
 <div style="background-color: #24262b;" class="trust-bar py-4  text-center mb-5">
     <div class="container">
@@ -325,6 +319,23 @@
 
     
 @endsection
+
+
+
+  <!-- Bootstrap Carousel -->
+
+
+
+
+
+
+
+
+
+
+
+
+
 {{-- <section class="profile-section">
     <img src="https://avatars.githubusercontent.com/u/7092023?v=4" />
     <div class="profile-content">

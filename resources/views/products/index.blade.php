@@ -54,7 +54,13 @@
 
         <!-- Pagination -->
         <div class="d-flex justify-content-center">
-            {{ $products->links() }}
-        </div>
+    <ul class="pagination" style="display: flex; justify-content: center; padding: 1rem 0; list-style: none;  border-radius: 0.25rem;">
+        {{ $products->links() }}
+    </ul>
+</div>
+
+        
     </div>
+    
 @endsection
+

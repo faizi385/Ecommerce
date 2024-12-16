@@ -32,7 +32,7 @@
                                         <form action="{{ route('cart.remove', $id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Remove from Cart</button>
+                                            <button style="background-color: #1B2A49" type="submit" class="btn text-white ">Remove from Cart</button>
                                         </form>
                                     </div>
                                 </div>
@@ -62,7 +62,7 @@
                                     <label for="discount_code">Discount Code</label>
                                     <input type="text" name="discount_code" id="discount_code" class="form-control" placeholder="Enter discount code">
                                 </div>
-                                <button type="submit" class="btn btn-success btn-block mb-4">Apply Discount</button>
+                                <button style="background-color: #03346E" type="submit" class="btn text-white  btn-block mb-4">Apply Discount</button>
                             </form>
 
                             @if (session('discount'))
@@ -77,7 +77,7 @@
                                 <h4 class="text-center mb-4">Total: $<span id="cart-total-summary">{{ number_format($previousTotal, 2) }}</span></h4>
                             @endif
 
-                            <a href="{{ route('cart.checkout') }}" class="btn btn-primary btn-block">Checkout</a>
+                            <a style="background-color: #021526"  href="{{ route('cart.checkout') }}" class="btn text-white btn-block">Checkout</a>
                             <a href="{{ route('welcome') }}" class="btn btn-secondary btn-block mt-2">Shop More</a>
                         </div>
                     </div>

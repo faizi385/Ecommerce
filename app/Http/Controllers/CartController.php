@@ -130,31 +130,30 @@ class CartController extends Controller
             return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
     
-        // Calculate the total from the cart items
+
         $total = array_sum(array_map(function ($item) {
             return $item['price'] * $item['quantity'];
         }, $cart));
     
-        // Create the order with the calculated total
+  
         $order = Order::create([
             'user_id' => auth()->id(),
             'status' => 'pending',
-            'total' => $total, // Store the total after calculating from cart
+            'total' => $total, 
             'name' => implode(', ', array_map(function($item) {
             return $item['name'] . ' (Qty: ' . $item['quantity'] . ')';
-        }, $cart)), // Optional: concatenating product names
+        }, $cart)), 
         ]);
     
-        // Iterate through the cart and save each item to the order
+   
         foreach ($cart as $item) {
             $order->update([
-                'product_id' => $item['product_id'], // Ensure this matches your table structure
+                'product_id' => $item['product_id'],
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
             ]);
         }
     
-        // Clear the cart after order placement
         $request->session()->forget('cart');
     
         return redirect()->route('orders.index')->with('success', 'Order placed successfully!');

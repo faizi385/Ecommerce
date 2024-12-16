@@ -6,6 +6,7 @@
     <title>Admin Panel</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet"> <!-- Optional custom admin styles -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     @yield('content')
@@ -188,12 +189,12 @@ body {
     top: 0;
     left: 0;
     bottom: 0;
-    background-color: #343a40;
+    background-color: #021526;
 }
 
 .sidebar-header {
     padding: 20px;
-    background: #212529;
+    background: #021526;
 }
 
 .sidebar-header h3 {

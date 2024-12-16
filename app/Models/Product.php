@@ -41,7 +41,7 @@ protected $fillable = [
     {
         return $this->hasMany(OrderItem::class);
     }
-    // Define the relationship to Tags
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class);

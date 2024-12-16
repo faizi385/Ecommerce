@@ -13,14 +13,13 @@ class OrderController extends Controller
 {
    public function store(Request $request)
 {
-    // Validate the request
+  
     $validated = $request->validate([
         'total' => 'required|numeric',
         'name' => 'nullable|string',
         'price' => 'nullable|numeric',
     ]);
 
-    // Create the order
     $order = Order::create([
         'user_id' => Auth::id(),
         'total' => $validated['total'],
@@ -29,12 +28,12 @@ class OrderController extends Controller
         'price' => $validated['price'],
     ]);
 
-    // Check if order was created
+  
     if (!$order) {
         return redirect()->route('orders.create')->withErrors('Failed to create order.');
     }
 
-    // Send email to the authenticated user
+ 
     $user = Auth::user();
     Mail::to($user->email)->send(new OrderConfirmed($order));
 
@@ -57,14 +56,14 @@ class OrderController extends Controller
                            ->when($status, function ($query, $status) {
                                return $query->where('status', $status);
                            })
-                           ->get(); // Retrieve all orders without pagination
+                           ->get(); 
         } else {
             $orders = Order::where('user_id', auth()->id())
                            ->with('items.product')
                            ->when($status, function ($query, $status) {
                                return $query->where('status', $status);
                            })
-                           ->get(); // Retrieve all orders without pagination
+                           ->get(); 
         }
     
         return view('orders.index', compact('orders', 'status'));
@@ -72,16 +71,16 @@ class OrderController extends Controller
 
     public function update(Request $request, Order $order)
     {
-        // Validate the request
+    
         $request->validate([
             'status' => 'required|in:pending,processing,shipped,delivered,canceled',
         ]);
     
-        // Update order status
+
         $order->status = $request->status;
         $order->save();
     
-        // Send email if the status is processing or delivered
+      
         if ($order->status === 'processing' || $order->status === 'delivered') {
             Mail::to($order->user->email)->send(new OrderStatusChanged($order));
         }

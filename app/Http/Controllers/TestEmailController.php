@@ -4,7 +4,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\OrderConfirmed; // Use the appropriate mailable class
+use App\Mail\OrderConfirmed; 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 

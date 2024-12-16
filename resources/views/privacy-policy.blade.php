@@ -49,8 +49,8 @@
 
             <h2>Contact Us</h2>
             <p>If you have questions or comments about this Privacy Policy, please contact us at:</p>
-            <p>Email: <a href="mailto:support@yourcompany.com">support@yourcompany.com</a><br>
-            Address: 123 Your Street, Your City, Your State, Your Country</p>
+            <p>Email: <a href="mailto:faizannovatore@gmail.com">faizannovatore@gmail.com</a><br>
+            Address: 123 , Lahore,Pakistan</p>
         </div>
     </div>
 </div>

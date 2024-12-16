@@ -6,6 +6,7 @@
     <title>Admin Panel</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet"> <!-- Optional custom admin styles -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     @yield('content')
@@ -188,12 +189,12 @@ body {
     top: 0;
     left: 0;
     bottom: 0;
-    background-color: #343a40;
+    background-color: #021526;
 }
 
 .sidebar-header {
     padding: 20px;
-    background: #212529;
+    background: #021526;
 }
 
 .sidebar-header h3 {
@@ -367,6 +368,45 @@ ul {
 
 .card .btn {
     margin-top: 0.5rem; /* Space between buttons */
+}
+/* Custom CSS for Admin Dashboard Cards */
+.card {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-number {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card .text-dark {
+    color: #333;
+}
+
+.card .text-primary {
+    color: #007bff;
+}
+
+.card .text-success {
+    color: #28a745;
+}
+
+.card .text-warning {
+    color: #ffc107;
+}
+
+.card .text-danger {
+    color: #dc3545;
 }
 
     </style>

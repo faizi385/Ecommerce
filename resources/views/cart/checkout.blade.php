@@ -1,35 +1,78 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
-    <h1 class="mb-4">Checkout</h1>
+<div class="container ">
+    <h1 class="mb-4 text-center">Checkout</h1>
 
     <!-- Checkout Form -->
-    <form action="{{ route('cart.checkout') }}" method="POST">
-        @csrf
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card-m shadow-sm border-0 rounded p-4">
+                <form action="{{ route('cart.checkout') }}" method="POST">
+                    @csrf
+                    <div class="form-row">
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="first_name">First Name</label>
+                            <input type="text" class="form-control form-control-lg" id="first_name" name="first_name" placeholder="Enter your first name" required>
+                        </div>
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" class="form-control form-control-lg" id="last_name" name="last_name" placeholder="Enter your last name" required>
+                        </div>
+                    </div>
+                    <!-- Address Details Section -->
+                    <div class="mb-4">
+                        <h5 class="mb-3">Address Details</h5>
+                        
+                        <div class="form-group mb-3">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control form-control-lg" id="address" name="address" placeholder="Enter your address" required>
+                        </div>
 
-        <!-- Add any other necessary checkout details here -->
+                        <div class="form-row">
+                            <div class="form-group col-md-6 mb-3">
+                                <label for="city">City</label>
+                                <input type="text" class="form-control form-control-lg" id="city" name="city" placeholder="Enter your city" required>
+                            </div>
+                            <div class="form-group col-md-6 mb-3">
+                                <label for="country">Country</label>
+                                <select class="form-control form-control-lg" id="country" name="country" required>
+                                    <option value="">Select your country</option>
+                                    <option value="Pakistan">Pakistan</option>
+                                    <option value="India">India</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="Australia">Australia</option>
+                                    <option value="Germany">Germany</option>
+                                    <option value="France">France</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            <label for="address">Address</label>
-            <input type="text" class="form-control" id="address" name="address" placeholder="Enter your address" required>
+                    <!-- Payment Method -->
+                    <div class="form-group mb-3">
+                        <label for="cash_on_delivery" class="d-block">Payment Method</label>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="cash_on_delivery" name="payment" value="cash_on_delivery" required>
+                            <label class="form-check-label" for="cash_on_delivery">I agree to pay with Cash on Delivery</label>
+                        </div>
+                    </div>
+
+                    <!-- Discount Code Section -->
+                    <!-- Discount Code Field -->
+                 
+
+                    <!-- Additional Notes -->
+                    <div class="form-group mb-4">
+                        <label for="notes">Additional Notes</label>
+                        <textarea class="form-control form-control-lg" id="notes" name="notes" rows="3" placeholder="Enter any additional notes here (optional)"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button style="background-color: #021526" type="submit" class="btn btn-lg w-100 text-white">Place Order</button>
+                </form>
+            </div>
         </div>
-
-        <div class="form-group mt-3">
-            <label for="payment">Payment Method</label>
-            <select class="form-control" id="payment" name="payment" required>
-                <option value="credit_card">Credit Card</option>
-                <option value="paypal">PayPal</option>
-                <option value="bank_transfer">Bank Transfer</option>
-            </select>
-        </div>
-
-        <div class="form-group mt-3">
-            <label for="notes">Additional Notes</label>
-            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Enter any additional notes here (optional)"></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary mt-4">Place Order</button>
-    </form>
+    </div>
 </div>
 @endsection

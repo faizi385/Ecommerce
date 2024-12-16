@@ -1,13 +1,16 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SectionController;
 use App\Http\Controllers\WelcomeController;
-
+use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\TestEmailController;
+use App\Http\Controllers\Admin\CarouselController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,54 +21,82 @@ use App\Http\Controllers\WelcomeController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
+// Route for displaying the homepage
+Route::get('/', [SectionController::class, 'show'])->name('welcome');
+// Route for dashboard (admin panel)
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    // Profile routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
     // Cart routes
-// Cart routes
-Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-Route::get('/cart/contents', [CartController::class, 'getCartContents'])->name('cart.contents');
-
-Route::post('cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
-Route::post('cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
-Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
-
-Route::post('checkout', [CartController::class, 'checkout'])->name('cart.checkout');
-
-Route::get('/search', [ProductController::class, 'index'])->name('search');
-
+    Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+    Route::get('/cart/contents', [CartController::class, 'getCartContents'])->name('cart.contents');
+    Route::post('cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+    Route::post('cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/cart/apply-discount', [CartController::class, 'applyDiscount'])->name('cart.applyDiscount');
+    Route::post('checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    // Wishlist routes
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+    Route::post('/wishlist/add/{productId}', [WishlistController::class, 'add'])->name('wishlist.add');
+    Route::delete('/wishlist/remove/{productId}', [WishlistController::class, 'remove'])->name('wishlist.remove');
     // Order routes
-    Route::resource('orders', OrderController::class)->only(['index', 'store', 'update', 'create']);
-    // Ensure you have create method in OrderController
-    Route::post('order/create', [OrderController::class, 'createOrder'])->name('order.create');
-    Route::get('order/{id}', [OrderController::class, 'show'])->name('order.show');
-
-    // In web.php
-Route::middleware('role:Admin')->group(function () {
-    Route::get('admin/orders', [OrderController::class, 'index'])->name('admin.orders.index');
-    Route::post('admin/orders/{order}/approve', [OrderController::class, 'approve'])->name('admin.orders.approve');
-    
+    Route::resource('orders', OrderController::class)->except(['destroy']);
+    Route::post('orders/{order}/approve', [OrderController::class, 'approve'])->name('admin.orders.approve');
+    // Product routes
+    Route::resource('products', ProductController::class);
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 });
+Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('carousel', CarouselController::class);
+});
+
+// Admin-specific routes
 Route::middleware(['auth', 'role:Admin'])->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-});
-});
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::delete('users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::get('admin/sections/edit', [SectionController::class, 'edit'])->name('admin.sections.edit');
+    Route::post('admin/sections/update', [SectionController::class, 'update'])->name('admin.sections.update');
+    Route::put('carousel/{id}', [SectionController::class, 'updateCarousel'])->name('admin.carousel.update');
+    Route::get('carousel/{id}/edit', [SectionController::class, 'editCarousel'])->name('admin.carousel.edit');
+    Route::delete('carousel/{id}', [SectionController::class, 'deleteCarousel'])->name('admin.carousel.delete');
+    Route::put('carousel/{id}', [SectionController::class, 'updateCarousel'])->name('admin.carousel.update');
 
-Route::resource('products', ProductController::class);
-Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+    Route::get('carousel', [SectionController::class, 'manageCarousel'])->name('admin.carousel.index');
+    Route::post('carousel', [SectionController::class, 'storeCarousel'])->name('admin.carousel.store');
+    Route::delete('carousel/{id}', [SectionController::class, 'deleteCarousel'])->name('admin.carousel.delete');
+});
+// Static pages
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 Route::get('checkout', function () {
     return view('cart.checkout');
 })->name('checkout');
-
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+Route::get('/privacy-policy', function () {
+    return view('privacy-policy');
+})->name('privacy.policy');
+// Test email route
+Route::get('/test-email', [TestEmailController::class, 'sendTestEmail']);
 require __DIR__.'/auth.php';
+
+
+
+
+
+
+
+
+
+
+
+
+
+

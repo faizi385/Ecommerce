@@ -18,6 +18,7 @@ protected $fillable = [
     'stock',
     'image',
     'category_id',
+    'featured',
 ];
 
 
@@ -26,8 +27,21 @@ protected $fillable = [
     {
         return $this->belongsTo(Category::class);
     }
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 
-    // Define the relationship to Tags
+    public function wishlistedBy()
+{
+    return $this->belongsToMany(User::class, 'wishlists');
+}
+
+    public function order()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
